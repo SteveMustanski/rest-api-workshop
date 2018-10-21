@@ -6,3 +6,4 @@ This is a workshop from Treehouse on building a REST API using node and express.
 ## Dependencies
 
 * express
+* body-parser
