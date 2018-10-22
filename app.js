@@ -16,6 +16,26 @@ app.use(logger('dev'));
 
 app.use('/questions', routes);
 
+//middleware for errors
+// catch 404 and forward to error handler
+app.use((req, res, next) => {
+  let err = new Error('Not found');
+  err.status = 404;
+  next(err);
+});
+
+// custom error handler
+// expres knows this is error handler because of the 4 parameters
+app.use((err, req, res, next) => {
+  res.status(err.status || 500);
+  res.json({
+    error: {
+      message: err.message
+    }
+  })
+});
+
+
 // start app listening on port
 app.listen(port, () => {
   console.log(`The app is listening on port ${port}`);
