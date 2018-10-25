@@ -48,38 +48,47 @@ db.once('open', () => {
     name: 'Beureguaurd'
   });
 
+  let animalData = [
+    {
+      type: 'mouse',
+      size: 'small',
+      color: 'gray',
+      mass: 1,
+      name: 'Sara'
+    },
+    {
+      type: 'puppy',
+      size: 'medium',
+      color: 'grizzle',
+      mass: 5,
+      name: 'Pepper'
+    },
+    elephant,
+    animal,
+    whale
+  ]
+
   // remove all animals from the db
   // then create the new animals
   Animal.remove({}, (err) => {
     if (err) {
       console.error(`Remove failed: ${err}`);
     } else
-      // save the elephant
-      elephant.save((err) => {
+      // save array of animals
+      Animal.create(animalData, (err, animals) => {
         if (err) {
           console.error(`Save failed: ${err}`);
-        } else console.log('record saved!');
-        // save default animal
-        animal.save((err) => {
+        } else console.log('records saved!');
+        // get and print all big animals
+        Animal.find({ size: 'big' }, (err, animals) => {
           if (err) {
-            console.error(`Save failed: ${err}`);
-          } else console.log('record saved!');
-          whale.save((err) => {
-            if (err) {
-              console.error(`Save failed: ${err}`);
-            } else console.log('record saved!');
-            // get and print all big animals
-            Animal.find({ size: 'big' }, (err, animals) => {
-              if (err) {
-                console.log(`There was an error finding animals ${err}`);
-              } else 
-                animals.forEach((animal) => {
-                  console.log(`${animal.name} the ${animal.color} ${animal.type}`);
-                });
-                    db.close(() => {
-                      console.log('db connection closed');
-                });
+            console.log(`There was an error finding animals ${err}`);
+          } else
+            animals.forEach((animal) => {
+              console.log(`${animal.name} the ${animal.color} ${animal.type}`);
             });
+          db.close(() => {
+            console.log('db connection closed');
           });
         });
       });
