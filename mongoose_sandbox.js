@@ -68,9 +68,17 @@ db.once('open', () => {
             if (err) {
               console.error(`Save failed: ${err}`);
             } else console.log('record saved!');
-            db.close(() => {
-              console.log('db connection closed');
-
+            // get and print all big animals
+            Animal.find({ size: 'big' }, (err, animals) => {
+              if (err) {
+                console.log(`There was an error finding animals ${err}`);
+              } else 
+                animals.forEach((animal) => {
+                  console.log(`${animal.name} the ${animal.color} ${animal.type}`);
+                });
+                    db.close(() => {
+                      console.log('db connection closed');
+                });
             });
           });
         });
