@@ -80,7 +80,7 @@ db.once('open', () => {
           console.error(`Save failed: ${err}`);
         } else console.log('records saved!');
         // get and print all big animals
-        Animal.find({ size: 'big' }, (err, animals) => {
+        Animal.find( {}, (err, animals) => {
           if (err) {
             console.log(`There was an error finding animals ${err}`);
           } else
