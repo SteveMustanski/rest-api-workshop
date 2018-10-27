@@ -5,6 +5,7 @@ const app = express();
 const jsonParser = require('body-parser').json;
 const routes = require('./routes');
 const logger = require('morgan');
+const mongoose = require('mongoose');
 
 // assign port from environment variable or default to 3000
 const port = process.env.PORT || 3000;
@@ -14,6 +15,22 @@ app.use(jsonParser());
 //include morgan with the dev passed in
 app.use(logger('dev'));
 
+// create mongoose connection
+// 27017 is the default mongo port
+mongoose.connect('mongodb://localhost:27017/qa', { useNewUrlParser: true });
+
+const db = mongoose.connection;
+
+db.on('error', (err) => {
+  console.error(`connection error: ${err}`)
+});
+
+db.once('open', () => {
+  console.log(`db connection successfull`);
+  // all database communication code goes here
+});
+
+// set the /questions as the main route that everything else goes under
 app.use('/questions', routes);
 
 //middleware for errors
