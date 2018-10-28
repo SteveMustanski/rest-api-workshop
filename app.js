@@ -27,8 +27,19 @@ db.on('error', (err) => {
 
 db.once('open', () => {
   console.log(`db connection successfull`);
-  // all database communication code goes here
 });
+
+// set headers so that api can be called from different domains
+app.user((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Aloow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  // pre-flight requests
+  if(req.method === 'OPTIONS') {
+    res.header('Access-Control-Allow-Methods', 'PUT, POST, DELETE');
+    return res.status((200).json({}))
+  }
+  next();
+})
 
 // set the /questions as the main route that everything else goes under
 app.use('/questions', routes);

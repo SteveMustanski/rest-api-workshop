@@ -7,6 +7,8 @@ The application is a question and answers application that allows users to creat
 
 The applicaiton is built primarily using nodejs and mongo.
 
+You can test the code by running postman against the various routes.
+
 ## Dependencies
 
 * express
