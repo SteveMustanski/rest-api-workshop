@@ -52,7 +52,7 @@ router.post('/', (req, res, next) => {
 // GET /questions/:id
 // route for specific question
 router.get('/:qId', (req, res, next) => {
-  res.json(question);
+  res.json(req.question);
 });
 
 // POST /questions/:id/answers
